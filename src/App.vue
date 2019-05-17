@@ -1,0 +1,33 @@
+<script>
+  // import { autoLogin } from './utils/index'
+
+  export default {
+    created () {
+      console.log('app app')
+      // autoLogin() // 默认自动登录
+    },
+    log () {
+      console.log(`log at:${Date.now()}`)
+    }
+  }
+</script>
+
+<style lang="less">
+  .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 200/7.5vw 0;
+    box-sizing: border-box;
+  }
+
+  /* this rule will be remove */
+  * {
+    transition: width 2s;
+    -moz-transition: width 2s;
+    -webkit-transition: width 2s;
+    -o-transition: width 2s;
+  }
+</style>
