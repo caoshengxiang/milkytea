@@ -21,7 +21,7 @@
         </div>
         <div class="wheel-bg" :style="{transform:rotate_angle,transition:rotate_transition}">
           <div class="prize-list">
-            <div v-for="(item) in prize_list" :key="item.id" class="prize-item">
+            <div v-for="item in prizeList" :key="item.id" class="prize-item">
               <div class="prize-type">
                 {{ item.name }}
               </div>
@@ -52,7 +52,7 @@
         <div class="containerBox">
           <div class="toast-title">
 
-            <p>恭喜获得 <span>{{ prize_list[this.index].name }} 奖池</span></p>
+            <p>恭喜获得 <span>{{ prizeList[this.index].name }} 奖池</span></p>
 
             <p><strong>现金{{ number }}元</strong></p>
           </div>
@@ -81,12 +81,12 @@
 </template>
 <script>
   export default {
-    // props: ['wheelStartBol'], // 从父组建传 状态过来
+    props: ['wheelStartBol'], // 从父组建传 状态过来
     data () {
       return {
         easejoy_bean: 0, // 金豆
         lottery_ticket: 0, // 抽奖次数
-        prize_list: [// 奖品列表
+        prizeList: [// 奖品列表
           {
             // icon: require('./assets/avatar.png'), // 奖品图片
             icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/1.png', // 奖品图片
@@ -262,11 +262,11 @@
 
           this.number = resp.bonus
 
-          this.$emit('bonus', this.number)
+          // this.$emit('bonus', this.number)
 
-          this.$parent.$parent.$parent.myTaskWordDataFun()
-
-          this.$parent.$parent.$parent.jcFun()
+          // this.$parent.$parent.$parent.myTaskWordDataFun()
+          //
+          // this.$parent.$parent.$parent.jcFun()
         } else {
           this.$message({
             message: '网络异常，请稍后重试',
@@ -280,39 +280,39 @@
       rotating () {
         if (!this.click_flag) return
         var type = 0 // 默认为 0  转盘转动 1 箭头和转盘都转动(暂且遗留)
-        var during_time = 5 // 默认为1s
+        var duringTime = 5 // 默认为1s
         // eslint-disable-next-line no-unused-vars
         var random = Math.floor(Math.random() * 7)
-        var result_index = this.index // 最终要旋转到哪一块，对应prize_list的下标
+        var resultIndex = this.index // 最终要旋转到哪一块，对应prizeList的下标
         // var result_angle = [337.5, 292.5, 247.5, 202.5, 157.5, 112.5, 67.5, 22.5]; //最终会旋转到下标的位置所需要的度数
-        var result_angle = [360, 324, 288, 252, 216, 180, 144, 108, 72, 36] // 最终会旋转到下标的位置所需要的度数
-        var rand_circle = 6 // 附加多转几圈，2-3
+        var resultAngle = [360, 324, 288, 252, 216, 180, 144, 108, 72, 36] // 最终会旋转到下标的位置所需要的度数
+        var ranCircle = 6 // 附加多转几圈，2-3
         this.click_flag = false // 旋转结束前，不允许再次触发
         if (type === 0) {
           // 转动盘子
-          var rotate_angle =
+          var rotateAngle =
             this.start_rotating_degree +
-            rand_circle * 360 +
-            result_angle[result_index] -
+            ranCircle * 360 +
+            resultAngle[resultIndex] -
             this.start_rotating_degree % 360
-          this.start_rotating_degree = rotate_angle
-          this.rotate_angle = 'rotate(' + rotate_angle + 'deg)'
+          this.start_rotating_degree = rotateAngle
+          this.rotate_angle = 'rotate(' + rotateAngle + 'deg)'
           // // //转动指针
-          // this.rotate_angle_pointer = "rotate("+this.start_rotating_degree_pointer + 360*rand_circle+"deg)";
-          // this.start_rotating_degree_pointer =360*rand_circle;
+          // this.rotate_angle_pointer = "rotate("+this.start_rotating_degree_pointer + 360*ranCircle+"deg)";
+          // this.start_rotating_degree_pointer =360*ranCircle;
           var that = this
           // 旋转结束后，允许再次触发
           setTimeout(function () {
             that.click_flag = true
             that.game_over()
-          }, during_time * 1000 + 1500) // 延时，保证转盘转完
+          }, duringTime * 1000 + 1500) // 延时，保证转盘转完
         } else {
           //
         }
       },
       game_over () {
         this.toast_control = true
-        this.hasPrize = this.prize_list[this.index].isPrize
+        this.hasPrize = this.prizeList[this.index].isPrize
         //   this.hasPrize = this.index
       },
       // 关闭弹窗
@@ -417,7 +417,7 @@
   }
 
   .wheelBefor {
-    background: url("./assets/avatar.png") no-repeat center top; /**指针 */
+    /*background: url("./assets/avatar.png") no-repeat center top; !**指针 *!*/
     background-size: 100%;
 
   }
@@ -648,7 +648,8 @@
   }
 
   .toast-container {
-    background: url("./assets/toast.png") no-repeat top center; /**中奖弹窗背景 */
+    /*background: url("./assets/toast.png") no-repeat top center; !**中奖弹窗背景 *!*/
+    background: #b0b7bd; /**中奖弹窗背景 */
     background-size: 100% 100%;
     width: 552px;
     height: 430px;
