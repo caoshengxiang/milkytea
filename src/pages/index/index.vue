@@ -1,641 +1,829 @@
 <template>
-  <div class="com-pages home-page">
-    <div class="search-box">
-      <!--      <img mode="widthFix" style="width: 5.6666667vw;height: 5.6666667vw;" src="../../../static/icon/search.png" alt="">-->
-      <!--<a href="/pages/package/couponCollection/main?id=8">test test test test</a>-->
-      <!--<a href="/pages/fromCode/main?gzhstaffcode=8">test test test test</a>-->
-      <!--<a href="/pages/package/webView/main?url=https://www.baidu.com/s?ie=UTF-8&wd=wx.miniProgram.navigateTo">test test test test</a>-->
-    </div>
-    <swiper
-      v-if="banner && banner.length"
-      :indicator-dots="banner.length > 1 ? true : false"
-      indicator-color="#cccccc"
-      indicator-active-color="#000000"
-      autoplay="true"
-      interval="3000"
-      duration="500"
-      circular="true"
-      class="banner">
-      <div v-for="(item, index) in banner" :key="index" class="banner-img-item">
-        <a hover-class="none" :href="item.url" @click="adClickhandle(item)">
-          <swiper-item>
-            <img :src="item.adImg" class="banner-img"/>
-          </swiper-item>
-        </a>
+  <div class="container">
+    <div class="lucky-wheel">
+      <div class="lucky-title">
+        <!--转盘标题图片定位在转盘上边-->
+        <!--        <img src="./assets/avatar.png" alt="">-->
       </div>
-    </swiper>
+      <div class="wheel-main">
+        <div class="wheel-pointer-box">
+          <div
+            class="wheel-pointer wheelBefor"
+            :style="{transform:rotate_angle_pointer,transition:rotate_transition_pointer}"
+            @click="tcFun()"
+          >
+            <!--开始-->
+            <!-- 指针程呼吸状态，两张指针进行透明度切换，使用css3改变透明度当条件成立时-->
+            <img style="width: 150px;margin-left: 50px;"
+                 src="https://8171176.h40.faiusr.com/4/153/ACgIABAEGAAg7JuN9gUovPm_pgMwlgE43AE.png" alt="">
 
-    <div class="member-enter">
-      <div class="rights">
-        <span class="member-enter-i member-enter-t1" v-if="userInfo.vip">您已是言选会员享</span>
-        <span class="member-enter-i member-enter-t1" v-else>开通言选会员享</span>
-        <swiper
-          :indicator-dots="false"
-          indicator-color="#cccccc"
-          indicator-active-color="#000000"
-          :autoplay="true"
-          interval="3000"
-          :duration="700"
-          circular="true"
-          :vertical="true"
-          class="all-rights">
-          <div v-for="(item, index) in allRights" :key="index" class="right-item">
-            <swiper-item style="line-height: 4.733333vw">
-              <div class="member-enter-i member-enter-t2 com-over-dashed"> {{item.name}}</div>
-            </swiper-item>
-          </div>
-        </swiper>
-      </div>
-      <a hover-class="none" href="/pages/package/member/main">
-        <span class="member-enter-i member-enter-btn" v-if="userInfo.vip"> 查看权益</span>
-        <span class="member-enter-i member-enter-btn" v-else> 立即开通</span>
-      </a>
-    </div>
-    <div class="rights-box">
-      <div class="com-flex">
-        <div class="com-flex-item com-flex-item-4">
-          <div class="rights-box-item">
-            <a hover-class="none" href="/pages/package/activity/main">
-              <img class="rights-box-img" src="../../../static/icon/home-1.png"/>
-              <div class="rights-box-title">大咖活动</div>
-            </a>
           </div>
         </div>
-        <div class="com-flex-item com-flex-item-4">
-          <div class="rights-box-item">
-            <a hover-class="none" @click="routePage('/pages/package/scores/main')">
-              <img class="rights-box-img" src="../../../static/icon/home-2.png"/>
-              <div class="rights-box-title">签到积分</div>
-            </a>
-          </div>
-        </div>
-        <div class="com-flex-item com-flex-item-4">
-          <div class="rights-box-item">
-            <a hover-class="none" @click="navigateToMiniProgram">
-              <img class="rights-box-img" src="../../../static/icon/home-3.png"/>
-              <div class="rights-box-title">礼品卡</div>
-            </a>
-          </div>
-        </div>
-        <div class="com-flex-item com-flex-item-4">
-          <div class="rights-box-item">
-            <a hover-class="none" href="/pages/package/member/main">
-              <img class="rights-box-img" src="../../../static/icon/home-4.png"/>
-              <div class="rights-box-title">言选会员</div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top: 4.13333333vw;">
-      <swiper
-        v-if="banner2 && banner2.length"
-        :indicator-dots="false"
-        indicator-color="#cccccc"
-        indicator-active-color="#000000"
-        autoplay="true"
-        interval="5000"
-        duration="1000"
-        circular="true"
-        class="banner-ad1">
-        <div v-for="(item, index) in banner2" :key="index" class="" @click="adClickHandle(item)">
-          <!-- <navigator url="/pages/webview/webview?url={{item.jumpLink}}">  -->
-          <a hover-class="none" :href="item.url">
-            <swiper-item>
-              <img :src="item.adImg" class="banner-img"/>
-            </swiper-item>
-          </a>
-        </div>
-      </swiper>
-    </div>
-    <div class="activity-box">
-      <div class="activity-box-top">
-        <span class="activity-box-title">最新活动</span>
-        <a hover-class="none" href="/pages/package/activity/main" class="activity-box-more">更多 <img
-          src="../../../static/icon/jiantou.png" alt=""></a>
-      </div>
-      <div class="activity-box-list-1" v-if="activityList.length">
-        <activity-card1 :activity="activityList[0]"></activity-card1>
-      </div>
-      <div class="activity-box-list-2">
-        <activity-card2 v-if="index != 0" :activity="item" :topLine="true" v-for="(item, index) in activityList"
-                        :key="index"></activity-card2>
-      </div>
-      <data-null v-if="isDataNull"></data-null>
-    </div>
+        <div class="wheel-bg" :style="{transform:rotate_angle,transition:rotate_transition}">
+          <div class="prize-list">
+            <div v-for="(item) in prize_list" :key="item.id" class="prize-item">
+              <div class="prize-type">
+                {{ item.name }}
+              </div>
+              <!--              <div v-if="item.count" class="prize-count">-->
+              <!--                {{ item.count }}元-->
+              <!--              </div>-->
+              <div class="prize-pic">
+                <img :src="item.icon">
+              </div>
+            </div>
+            <div class="zplightBox">
+              <!-- 透明彩灯，使用css3改变透明度使其闪动 -->
+              <!--              <img src="../../assets/avatar.png" alt="">-->
+            </div>
 
-    <com-modal title="" :visible="visible" background-color="rgba(255, 255, 255, 255, 0)">
-      <div class="new-people-coupon">
-        <div class="gift-box">
-          <img class="gift-img" src="../../../static/icon/gift-xxx.png" alt="">
-          <div class="coupon-font-1">新客惊喜红包</div>
-          <div class="coupon-font-2">与你的每一次相遇都该充满惊喜</div>
-          <div class="coupon-font-3"><span class="coupon-font-3-m">20</span><span>元</span></div>
-          <div class="coupon-btn-box">
-            <div class="coupon-btn" @click="login">立即领取</div>
           </div>
         </div>
-        <div class="close-box">
-          <img class="close-icon" @click="visible = false" src="../../../static/icon/x.png" alt="">
-        </div>
-      </div>
-    </com-modal>
 
-    <!--<div class="weui-loadmore">-->
-    <!--<div class="weui-loading" v-if="!lastPage"></div>-->
-    <!--<div class="weui-loadmore__tips" v-if="!lastPage">正在加载</div>-->
-    <!--<div class="weui-loadmore__tips" v-if="lastPage">- 已经到底啦 -</div>-->
-    <!--</div>-->
-    <load-more :loading="loading" :lastPage="lastPage"></load-more>
+      </div>
+    </div>
+    <!-- 中奖弹窗 -->
+
+    <div v-show="toast_control" class="toast">
+      <div class="toastTop">
+        <!--        <img src="../../assets/avatar.png" alt="">-->
+      </div>
+      <div class="toast-container">
+        <div class="containerBox">
+          <div class="toast-title">
+
+            <p>恭喜获得 <span>{{ prize_list[this.index].name }} 奖池</span></p>
+
+            <p><strong>现金{{ number }}元</strong></p>
+          </div>
+          <div class="toast-btn">
+            <div class="toast-cancel" @click="close_toast">确定</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div v-show="toast_control" class="toast-mask"/>
+    <!--提示-->
+    <!--    <el-dialog-->
+    <!--      title="提示"-->
+    <!--      :visible.sync="promptDialogVisible"-->
+    <!--      class="promptBox"-->
+    <!--      center-->
+    <!--    >-->
+    <!--      <p>将消耗5个字符开启奖池</p>-->
+    <!--      <span slot="footer" class="dialog-footer">-->
+    <!--        <el-button class="cancelBtn" @click="promptDialogVisible = false">取 消</el-button>-->
+    <!--        <el-button class="submitBtn" @click="rotate_handle()">确 定</el-button>-->
+    <!--      </span>-->
+    <!--    </el-dialog>-->
   </div>
 </template>
-
 <script>
-  import { isLogin, autoLogin, toLoginPage, wxCheckUpdate } from '../../utils/index'
-  import API from '../../utils/api'
-  import activityCard1 from '../../components/activityCard/activityCard1'
-  import activityCard2 from '../../components/activityCard/activityCard2'
-  import comModal from '../../components/comModal'
-  import dataNull from '../../components/dataNull'
-  import loadMore from '../../components/loadMore'
-
   export default {
+    // props: ['wheelStartBol'], // 从父组建传 状态过来
     data () {
       return {
-        // gzhstaffcode: '222',
-        userInfo: {},
-        visible: false,
-        banner: [],
-        banner2: [],
-        // {
-        //   img: 'http://mss.sankuai.com/v1/mss_51a7233366a4427fa6132a6ce72dbe54/newsPicture/05558951-de60-49fb-b674-dd906c8897a6',
-        //   jumpLink: '/pages/package/paymentSuccess/main?orderId=1154453103601659904&checkoutType=activity',
-        //   id: 1
-        // }, {
-        //   img: 'http://mss.sankuai.com/v1/mss_51a7233366a4427fa6132a6ce72dbe54/coursePicture/0fbcfdf7-0040-4692-8f84-78bb21f3395d',
-        //   jumpLink: '/pages/package/paymentSuccess/main?orderId=1154453103601659904&checkoutType=member',
-        //   id: 2
-        // }, {
-        //   img: 'http://mss.sankuai.com/v1/mss_51a7233366a4427fa6132a6ce72dbe54/management-school-picture/7683b32e-4e44-4b2f-9c03-c21f34320870',
-        //   jumpLink: '/pages/package/paymentSuccess/main?orderId=1154453103601659904&checkoutType=charge',
-        //   id: 3
-        // }, {
-        //   img: 'http://pics.sc.chinaz.com/files/pic/pic9/201806/zzpic12377.jpg',
-        //   jumpLink: '/pages/index/main?gzhstaffcode=111',
-        //   id: 4
-        // }],
-        activityList: [],
-        location: {
-          longitude: null,
-          latitude: null
-        },
-        current: 1,
-        totalPages: 0,
-        lastPage: false,
-        loading: false,
-        allRights: [],
-        isDataNull: false
-      }
-    },
+        easejoy_bean: 0, // 金豆
+        lottery_ticket: 0, // 抽奖次数
+        prize_list: [// 奖品列表
+          {
+            // icon: require('./assets/avatar.png'), // 奖品图片
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/1.png', // 奖品图片
+            count: 500, // 奖品数量
+            name: '200元京东券', // 奖品名称
+            isPrize: 1, // 该奖项是否为奖品
+            id: 201901
+          },
+          {
+            // icon: require('./assets/avatar.png'),
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/7.png',
+            count: 10000,
+            name: '300元京东券',
+            isPrize: 1,
+            id: 201902
+          },
+          {
+            // icon: require('./assets/avatar.png'),
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/3.png',
+            count: 5000,
+            name: '50个比特币',
+            isPrize: 1,
+            id: 201903
+          },
 
-    components: {
-      activityCard1,
-      activityCard2,
-      comModal,
-      dataNull,
-      loadMore
+          {
+            // icon: require('./assets/avatar.png'), // 奖品图片
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/4.png', // 奖品图片
+            count: 500, // 奖品数量
+            name: '50元话费券', // 奖品名称
+            isPrize: 1, // 该奖项是否为奖品
+            id: 201904
+          },
+
+          {
+            // icon: require('./assets/avatar.png'),
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/5.png',
+            count: 50000,
+            name: '100元话费券',
+            isPrize: 1,
+            id: 201905
+          },
+          {
+            // icon: require('./assets/avatar.png'),
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/6.png',
+            count: 1000,
+            name: '100个比特币',
+            isPrize: 1,
+            id: 201906
+          },
+          {
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/6.png',
+            count: 10000,
+            name: '100个比特币',
+            isPrize: 1,
+            id: 201907
+          },
+          {
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/6.png', // 奖品图片
+            count: 500, // 奖品数量
+            name: '100个比特币', // 奖品名称
+            isPrize: 1, // 该奖项是否为奖品
+            id: 201908
+          },
+
+          {
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/6.png',
+            count: 5000,
+            name: '100个比特币',
+            isPrize: 1,
+            id: 201909
+          },
+          {
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/6.png',
+            count: 1000,
+            name: '100个比特币',
+            isPrize: 1,
+            id: 201910
+          },
+
+        ],
+        toast_control: false, // 抽奖结果弹出框控制器
+        hasPrize: false, // 是否中奖
+        start_rotating_degree: 0, // 初始旋转角度
+        rotate_angle: 0, // 将要旋转的角度
+        start_rotating_degree_pointer: 0, // 指针初始旋转角度
+        rotate_angle_pointer: 0, // 指针将要旋转的度数
+        rotate_transition: 'transform 6s ease-in-out', // 初始化选中的过度属性控制
+        rotate_transition_pointer: 'transform 12s ease-in-out', // 初始化指针过度属性控制
+        click_flag: true, // 是否可以旋转抽奖
+        index: 0, // 中奖key
+        number: null, // 中奖金额
+        promptDialogVisible: false,
+        statusLists: {
+          guaStatus: 0,
+          kaStatus: 0,
+          fenStatus: 0,
+          jiangStatus: 0
+        },
+        kaLists: {
+          BEgua: 0,
+          BEka: 0,
+          BEfen: 0,
+          BEjiang: 0,
+          BEchi: 0
+        }
+
+      }
     },
 
     methods: {
-      login () {
-        toLoginPage()
+      tcFun () {
+        // 条件成立，才可以启动转盘
+        // 获取后端接口，拿到当前拥有的卡片，这里只做示范
+        // if (this.statusLists.guaStatus == 2 || this.statusLists.kaStatus == 2 || this.statusLists.fenStatus == 2 || this.statusLists.jiangStatus == 2){
+
+        //     this.$message({
+        //           message: '每天只可以兑换1次，请明天再试',
+        //           type: 'warning',
+        'messageBox'
+        //          });
+        //       return
+        //  }
+        //     if(this.kaLists.BEgua <= 0 || this.kaLists.BEka <= 0 || this.kaLists.BEfen <= 0 || this.kaLists.BEjiang <= 0 || this.kaLists.BEchi <= 0 ){
+        //   this.$message({
+        //      message: '获得5张卡才可以开奖',
+        //      type: 'warning',
+        //       customClass:'messageBox'
+        // });
+
+        // }else {
+        //   this.promptDialogVisible = true;
+
+        // }
+        // 条件成立，弹出确认弹框
+        // this.promptDialogVisible = true
+        this.rotate_handle()
       },
-      initData () {
-        this.current = 1
-        this.totalPages = 0
-        this.lastPage = false
-        this.loading = false
-        this.activityList = []
-        this.isDataNull = false
-      },
-      getIsEnter (params) {
-        API.activity.isEnter(params).then(da => {
-          let list = this.activityList
-          da.data.forEach(itemP => {
-            this.activityList.forEach(itemA => {
-              if (itemA.id === itemP.id) {
-                itemA.signIn = itemP.signIn
-              }
-            })
-          })
-          this.activityList = list
-        })
-      },
-      getListData () {
-        // let start = new Date().getTime()
-        // console.log('活动API请求开始', start)
-        API.activity.list({
-          lon: this.location.longitude,
-          lat: this.location.latitude,
-          // cityId: this.location,
-          // thirdCateId
-          // isFree
-          current: this.current,
-          size: 3,
-          ascs: 'floor_distance,activity_start'
-        }).then(da => {
-          // console.log('活动列表', da)
-          // let end = new Date().getTime()
-          // console.log('活动API请求结束', new Date().getTime(), end - start, '毫秒')
-          this.loading = false
-          this.totalPages = da.data.pages
-          if (this.current >= da.data.pages) {
-            this.lastPage = true
-          } else {
-            this.lastPage = false
+
+// 获取中奖数据
+      rotate_handle () {
+        this.promptDialogVisible = false
+
+        // this.$Api.redeemTaskWordPrize().then(resp => {
+        // 模拟后台返回数据
+        const resp = { prizeLevel: 1, bonus: 1000, txt: '铂金' }
+        if (resp) {
+          // 如果此奖项在转盘中有两项以上，随机转动到其中一项
+          if (resp.prizeLevel === 1) { // 青铜
+            const arr = [0, 3, 7]
+            const i = Math.floor(Math.random() * arr.length + 1) - 1
+            this.index = arr[i]// 指定每次旋转到的奖品下标
+          } else if (resp.prizeLevel === 2) { // 白银
+            const arr = [5, 9]
+            const i = Math.floor(Math.random() * arr.length + 1) - 1// 随机数
+
+            this.index = arr[i]// 指定每次旋转到的奖品下标
+          } else if (resp.prizeLevel === 3) { // 黄金
+            const arr = [2, 8]
+            const i = Math.floor(Math.random() * arr.length + 1) - 1
+
+            this.index = arr[i]// 指定每次旋转到的奖品下标
+          } else if (resp.prizeLevel === 4) { // 铂金
+            const arr = [1, 6]
+            const i = Math.floor(Math.random() * arr.length + 1) - 1
+
+            this.index = arr[i]// 指定每次旋转到的奖品下标
+          } else if (resp.prizeLevel === 5) { // 钻石
+            this.index = 4
           }
-          this.isDataNull = da.data.total <= 0
-          da.data.records.forEach(item => {
-            this.activityList.push(item)
-          })
-        }).catch((err) => {
-          console.log('活动列表数据异常', err)
-        })
-      },
-      getUserInfo () {
-        // console.log('home', mpvue.getStorageSync('userInfo'))
-        this.userInfo = mpvue.getStorageSync('userInfo') || {}
-      },
-      navigateToMiniProgram () {
-        wx.navigateToMiniProgram({
-          appId: 'wx2f995afe4fc9fb03',
-          path: 'pages/index2/index2',
-          extraData: {
-            foo: 'bar'
-          },
-          envVersion: 'release',
-          success (res) {
-            // 打开成功
-          }
-        })
-      },
-      routePage (url) {
-        if (!isLogin()) {
-          toLoginPage()
+
+          this.rotating()
+
+          this.number = resp.bonus
+
+          this.$emit('bonus', this.number)
+
+          this.$parent.$parent.$parent.myTaskWordDataFun()
+
+          this.$parent.$parent.$parent.jcFun()
         } else {
-          wx.navigateTo({
-            url: url
+          this.$message({
+            message: '网络异常，请稍后重试',
+            type: 'error',
+            customClass: 'messageBox'
           })
         }
+
+        // });
       },
-      getAdsListBanner () {
-        API.adsPos.list({
-          positionIds: 10007 // 会员服务平台-首页轮播广告
-        }).then(da => {
-          this.banner = da.data[0] && da.data[0].adList
-        })
+      rotating () {
+        if (!this.click_flag) return
+        var type = 0 // 默认为 0  转盘转动 1 箭头和转盘都转动(暂且遗留)
+        var during_time = 5 // 默认为1s
+        // eslint-disable-next-line no-unused-vars
+        var random = Math.floor(Math.random() * 7)
+        var result_index = this.index // 最终要旋转到哪一块，对应prize_list的下标
+        // var result_angle = [337.5, 292.5, 247.5, 202.5, 157.5, 112.5, 67.5, 22.5]; //最终会旋转到下标的位置所需要的度数
+        var result_angle = [360, 324, 288, 252, 216, 180, 144, 108, 72, 36] // 最终会旋转到下标的位置所需要的度数
+        var rand_circle = 6 // 附加多转几圈，2-3
+        this.click_flag = false // 旋转结束前，不允许再次触发
+        if (type === 0) {
+          // 转动盘子
+          var rotate_angle =
+            this.start_rotating_degree +
+            rand_circle * 360 +
+            result_angle[result_index] -
+            this.start_rotating_degree % 360
+          this.start_rotating_degree = rotate_angle
+          this.rotate_angle = 'rotate(' + rotate_angle + 'deg)'
+          // // //转动指针
+          // this.rotate_angle_pointer = "rotate("+this.start_rotating_degree_pointer + 360*rand_circle+"deg)";
+          // this.start_rotating_degree_pointer =360*rand_circle;
+          var that = this
+          // 旋转结束后，允许再次触发
+          setTimeout(function () {
+            that.click_flag = true
+            that.game_over()
+          }, during_time * 1000 + 1500) // 延时，保证转盘转完
+        } else {
+          //
+        }
       },
-      getAdsListBanner2 () {
-        wx.showLoading({
-          title: '加载中...',
-          mask: true
-        })
-        API.adsPos.list({
-          positionIds: 10008 // 会员服务平台-首页横幅广告
-        }).then(da => {
-          this.banner2 = da.data[0] && da.data[0].adList
-          setTimeout(() => {
-            wx.hideLoading()
-          }, 200)
-        }).catch(() => {
-          setTimeout(() => {
-            wx.hideLoading()
-          }, 200)
-        })
+      game_over () {
+        this.toast_control = true
+        this.hasPrize = this.prize_list[this.index].isPrize
+        //   this.hasPrize = this.index
       },
-      getMemberCardList () {
-        this.allRights = []
-        API.member.list(null, true).then(da => {
-          this.memberCardList = da.data
-          this.memberCardItem = da.data[0]
-          if (this.memberCardItem.rights && this.memberCardItem.rights.length) {
-            this.memberCardItem.rights.forEach(rightsTypeItem => {
-              this.allRights = this.allRights.concat(rightsTypeItem.subList)
-            })
-          }
-        })
-      },
-      adClickHandle (item) {
-        API.adsPos.visit({id: item.id})
+      // 关闭弹窗
+      close_toast () {
+        this.toast_control = false
+        // this.$parent.$parent.$parent.myTaskWordDataFun();
       }
-    },
-    mounted () {
-      // let that = this
-      this.getAdsListBanner()
-      this.getAdsListBanner2()
-      this.getMemberCardList()
-    },
-    /* 小程序 */
-    onShow () {
-      const that = this
-      wxCheckUpdate()
-      if (!isLogin()) {
-        that.visible = true
-      } else {
-        that.visible = false
-      }
-      if (that.location.longitude && that.location.latitude) {
-        this.getUserInfo()
-        this.initData()
-        this.getListData()
-      } else {
-        wx.getLocation({ // 获取当前经纬度
-          type: 'wgs84', // 返回可以用于wx.openLocation的经纬度，官方提示bug: iOS 6.3.30 type 参数不生效，只会返回 wgs84 类型的坐标信息
-          success: function (res) {
-            that.location = res
-            if (!isLogin()) {
-              autoLogin().then(keys => {
-                // console.log('个人中心自动登录', keys)
-                that.getUserInfo()
-                that.initData()
-                that.getListData()
-              }).catch(() => {
-                setTimeout(() => {
-                  that.visible = true
-                }, 200)
-                that.initData()
-                that.getListData()
-              })
-            } else {
-              that.initData()
-              that.getListData()
-              that.getUserInfo()
-              that.visible = false
-            }
-          },
-          fail: function () {
-            if (!isLogin()) {
-              that.getUserInfo()
-              that.initData()
-              that.getListData()
-            } else {
-              that.initData()
-              that.getListData()
-            }
-          }
-        })
-      }
-    },
-    // 下拉刷新  main.json 加入"enablePullDownRefresh": true
-    // onPullDownRefresh: function () {
-    //   // 显示顶部刷新图标
-    //   wx.showNavigationBarLoading()
-    //   // var that = this
-    //   // setTimeout(() => {
-    //   //   // 隐藏导航栏加载框
-    //   //   wx.hideNavigationBarLoading()
-    //   // }, 600)
-    //   this.getListData()
-    // },
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-      // var that = this
-      // 显示加载图标
-      this.loading = true
-      if (this.lastPage) { // 最后一页
-        // setTimeout(() => {
-        //   this.loading = false
-        // }, 2000)
-      } else {
-        this.current++
-        this.getListData()
-      }
-    },
-    onShareAppMessage (res) { // 分享
-      // console.log(res, '=====>>>>>')
-      // if (res.from !== 'button') return false
-      // return {
-      //   title: '',
-      //   path: '',
-      //   imageUrl: ''
-      // }
     }
   }
 </script>
-
 <style scoped lang="less">
-  @import url('../../../static/style/common');
-
-  .test {
-    color: #383633;
+  .container {
+    width: 652px;
+    padding-top: 58px;
+    /*background: url("https://www.17sucai.com/preview/1424582/2020-01-01/dzp/images/turnplate-bg.png") no-repeat top center; !*转盘背景，不包含转盘 *!*/
+    padding-bottom: 30px;
+    margin: 0px auto;
   }
 
-  .com-pages {
-    padding-left: 31/7.5vw;
-    padding-right: 31/7.5vw;
-    .search-box {
-      margin: 20/7.5vw 0;
-      text-align: right;
-      img {
-
-      }
-    }
+  .lucky-wheel {
+    width: 625px;
+    height: 625px;
+    padding-top: 25px;
+    position: relative;
   }
 
-  .banner {
-    width: 688/7.5vw;
-    height: 350/7.5vw;
-    border-radius: 10/7.5vw;
-    overflow: hidden;
-    -webkit-backface-visibility: hidden;
-    -webkit-transform: translate3d(0, 0, 0);
-    .banner-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 10/7.5vw;
-    }
+  .lucky-title {
+    position: absolute;
+    top: 0px;
+    left: 36px;
+    z-index: 999;
   }
 
-  .banner-ad1 {
-    width: 688/7.5vw;
-    height: 210/7.5vw;
-    overflow: hidden;
-    .banner-img {
-      width: 100%;
-      height: 100%;
-      /*      border-radius: 10/7.5vw;*/
-    }
-  }
-
-  .all-rights {
-    width: 260/7.5vw;
-    height: 34/7.5vw;
-    overflow: hidden;
-    .right-item {
-      width: 100%;
-      /*      border-radius: 10/7.5vw;*/
-    }
-  }
-
-  .member-enter {
-    margin-top: 30/7.5vw;
-    margin-bottom: 10/7.5vw;
-    width: 688/7.5vw;
-    box-sizing: border-box;
-    height: 100/7.5vw;
-    background-color: #393733;
-    border-radius: 10/7.5vw;
+  .wheel-main {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding-left: 30/7.5vw;
-    padding-right: 10/7.5vw;
-    .rights {
-      display: flex;
-      align-items: center;
-    }
-    .member-enter-i {
-      display: inline-block;
-      color: #F0E0B8;
-      font-size: 30/7.5vmin;
-    }
-    .member-enter-t2 {
-      margin-left: 20/7.5vw;
-      flex: 1;
-      width: 100%;
-    }
-    .member-enter-btn {
-      border: 1px solid #F0E0B8;
-      border-radius: 20/7.5vw;
-      font-size: 24/7.5vmin;
-      padding: 5/7.5vw 10/7.5vw;
-    }
-  }
-
-  .rights-box-item {
-    font-size: 22/7.5vmin;
-    text-align: center;
-    margin-top: 30/7.5vw;
-    margin-bottom: 30/7.5vw;
-    .rights-box-img {
-      width: 100/7.5vw;
-      height: 100/7.5vw;
-    }
-    .rights-box-title {
-      position: relative;
-      top: -10/7.5vw;
-    }
-  }
-
-  .activity-box {
-    margin-top: 60/7.5vw;
-    margin-bottom: 30/7.5vw;
-    .activity-box-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      color: #1A1A1A;
-      .activity-box-title {
-        font-size: 48/7.5vmin;
-      }
-      .activity-box-more {
-        font-size: 24/7.5vmin;
-        display: flex;
-        align-items: center;
-        img {
-          width: 12/7.5vw;
-          height: 18/7.5vw;
-          margin-left: 5/7.5vw;
-        }
-      }
-    }
-  }
-
-  .activity-box-list-1 {
-    /*margin-top: 31/7.5vw;*/
-  }
-
-  .activity-box-list-2 {
-
-  }
-
-  .new-people-coupon {
-    width: 658/7.5vw;
-    height: 800/7.5vw;
+    justify-content: center;
     position: relative;
-    .gift-box {
-      width: 658/7.5vw;
-      height: 660/7.5vw;
-      position: relative;
-      left: -10/7.5vw;
-      color: #A0714C;
-      .gift-img {
-        width: 658/7.5vw;
-        height: 660/7.5vw;
-      }
-      .coupon-font-1 {
-        font-size: 40/7.5vmin;
-        position: absolute;
-        top: 110/7.5vw;
-        left: 78/7.5vw;
-        width: 500/7.5vw;
-        text-align: center;
-      }
-      .coupon-font-2 {
-        font-size: 22/7.5vmin;
-        position: absolute;
-        top: 200/7.5vw;
-        left: 78/7.5vw;
-        text-align: center;
-        width: 500/7.5vw;
-      }
-      .coupon-font-3 {
-        font-size: 40/7.5vmin;
-        position: absolute;
-        top: 220/7.5vw;
-        left: 78/7.5vw;
-        width: 500/7.5vw;
-        text-align: center;
-        .coupon-font-3-m {
-          font-size: 150/7.5vmin;
-        }
-      }
-      .coupon-btn-box {
-        position: absolute;
-        bottom: 60/7.5vw;
-        left: 78/7.5vw;
-        width: 500/7.5vw;
-        text-align: center;
-        .coupon-btn {
-          width: 269/7.5vw;
-          height: 64/7.5vw;
-          line-height: 64/7.5vw;
-          color: #D04B46;
-          font-size: 32/7.5vmin;
-          text-align: center;
-          background-color: #f5e0cc;
-          margin: auto;
-        }
-      }
+  }
 
-    }
-    .close-box {
-      position: absolute;
-      bottom: 0;
+  .wheel-bg {
+    width: 625px;
+    height: 625px;
+    background: url("https://www.17sucai.com/preview/1424582/2020-01-01/dzp/images/turnplate-bg.png") no-repeat center top; /**转盘 */
+    background-size: 100%;
+    color: #fff;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    transition: transform 3s ease;
+  }
+
+  .zplightBox {
+    width: 659px;
+    height: 657px;
+
+    position: absolute;
+    top: -15px;
+    left: -16px;
+
+    img {
       width: 100%;
-      text-align: center;
-      .close-icon {
-        width: 64/7.5vw;
-        height: 64/7.5vw;
-      }
+      height: 100%;
+      /*-webkit-animation-timing-function: ease-in-out !important;*/
+      /*-webkit-animation-name: twinkling !important;*/
+      /*-webkit-animation-duration: 300ms !important;*/
+      /*-webkit-animation-iteration-count: infinite !important;*/
+      /*-webkit-animation-direction: alternate !important;*/
+      -webkit-animation: twinkling 400ms infinite ease-in-out;
+
     }
   }
 
-  .loading {
-    height: 100/7.5vw;
-    line-height: 100/7.5vw;
+  .wheel-pointer-box {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    z-index: 100;
+    transform: translate(-50%, -60%);
+    /*width: 625px;*/
+    /*height: 625px;*/
+  }
+
+  .wheel-pointer {
+    width: 238px;
+    height: 263px;
+    transform-origin: center 60%;
+
+    img {
+      width: 100%;
+      /*-webkit-animation: twinkling 1s infinite ease-in-out;*/
+
+      -webkit-animation-timing-function: ease-in-out;
+      -webkit-animation-name: twinkling;
+      -webkit-animation-duration: 800ms;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-direction: alternate;
+    }
+
+  }
+
+  .wheelBefor {
+    background: url("./assets/avatar.png") no-repeat center top; /**指针 */
+    background-size: 100%;
+
+  }
+
+  .wheel-bg div {
     text-align: center;
   }
+
+  .prize-list {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .prize-list .prize-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+
+  .prize-item {
+    width: 137px;
+    height: 197px;
+  }
+
+  .prize-pic img {
+    width: 69px;
+  }
+
+  .prize-count {
+    font-size: 26px;
+    font-weight: bold;
+    color: #ea3697;
+  }
+
+  .prize-type {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .prize-list .lightBox {
+
+    width: 57px;
+    height: 58px;
+    position: absolute;
+
+  }
+
+  // 转盘内容倾斜度
+  .prize-list .prize-item:first-child {
+    top: 44px;
+    left: 245px;
+    transform: rotate(0deg);
+
+    .prize-type {
+      color: #c23800;
+      text-shadow: -1px 0 #fff,
+      0 1px #fff,
+      2px 0 #fff,
+        0 -1px #fff;
+    }
+
+  }
+
+  .prize-list .prize-item:nth-child(2) {
+    top: 74px;
+    left: 345px;
+    transform: rotate(37deg);
+
+    .prize-type {
+      color: #00a004;
+    }
+  }
+
+  .prize-list .prize-item:nth-child(3) {
+    top: 162px;
+    left: 409px;
+    transform: rotate(70deg);
+
+    .prize-type {
+      color: #d99900;
+    }
+  }
+
+  .prize-list .prize-item:nth-child(4) {
+    top: 264px;
+    left: 411px;
+    transform: rotate(111deg);
+
+    .prize-type {
+      color: #c22e00;
+      text-shadow: -1px 0 #fff,
+      0 1px #fff,
+      2px 0 #fff,
+        0 -1px #fff;
+    }
+  }
+
+  .prize-list .prize-item:nth-child(5) {
+    top: 354px;
+    left: 343px;
+    transform: rotate(-220deg);
+
+    .prize-type {
+      color: #f83bff;
+    }
+  }
+
+  .prize-list .prize-item:nth-child(6) {
+    top: 386px;
+    left: 247px;
+    transform: rotate(-181deg);
+
+    .prize-type {
+      color: #fff;
+
+    }
+  }
+
+  .prize-list .prize-item:nth-child(7) {
+    top: 353px;
+    left: 147px;
+    transform: rotate(-146deg);
+
+    .prize-type {
+      color: #00a004;
+    }
+  }
+
+  .prize-list .prize-item:nth-child(8) {
+    top: 268px;
+    left: 82px;
+    transform: rotate(-108deg);
+
+    .prize-type {
+      color: #c22e00;
+      text-shadow: -1px 0 #fff,
+      0 1px #fff,
+      2px 0 #fff,
+        0 -1px #fff;
+    }
+  }
+
+  .prize-list .prize-item:nth-child(9) {
+    top: 158px;
+    left: 82px;
+    transform: rotate(-75deg);
+
+    .prize-type {
+      color: #d99900;
+    }
+  }
+
+  .prize-list .prize-item:nth-child(10) {
+    top: 75px;
+    left: 145px;
+    transform: rotate(-39deg);
+
+    .prize-type {
+      color: #fff;
+    }
+  }
+
+  .tip {
+    position: relative;
+    margin: 2.5rem auto 0;
+    width: 300px;
+    border: 1px solid #fbc27f;
+  }
+
+  .tip-title {
+    position: absolute;
+    top: -1rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 1rem;
+    color: #fccc6e;
+    background: rgb(243, 109, 86);
+    padding: 0.3125rem 0.625rem;
+  }
+
+  .tip-content {
+    padding: 1.5625rem 0.625rem;
+    font-size: 0.875rem;
+    color: #fff8c5;
+    line-height: 1.5;
+  }
+
+  .toast-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 10000;
+    width: 100%;
+    height: 100%;
+  }
+
+  .toast {
+    position: fixed;
+    top: 57%;
+    left: 50%;
+    z-index: 20000;
+    transform: translate(-50%, -50%);
+    width: 552px;
+    height: 490px;
+
+    .toastTop {
+
+      position: absolute;
+      top: -122px;
+      left: 86px;
+      /*-webkit-animation: twinkling 1s infinite ease-in-out;*/
+      -webkit-transform: rotate(360deg);
+      animation: rotation 4s linear infinite;
+      -moz-animation: rotation 4s linear infinite;
+      -webkit-animation: rotation 4s linear infinite;
+      -o-animation: rotation 4s linear infinite;
+      width: 386px;
+
+      img {
+        width: 100%;
+      }
+
+    }
+
+  }
+
+  .toast-container {
+    background: url("./assets/toast.png") no-repeat top center; /**中奖弹窗背景 */
+    background-size: 100% 100%;
+    width: 552px;
+    height: 430px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: 0px auto;
+
+    .containerBox {
+      width: 194px;
+      position: absolute;
+      bottom: 106px;
+      left: 191px;
+
+    }
+  }
+
+  .toast-picture {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 600px;
+
+  }
+
+  .toast-pictrue-change {
+    position: absolute;
+    top: -1.5rem;
+    left: -1.375rem;
+    width: 17.5rem;
+    height: 3.125rem;
+  }
+
+  .toast-title {
+    padding: 60px 0;
+    padding-bottom: 30px;
+    font-size: 18px;
+    color: #fc7939;
+    text-align: center;
+    margin-top: 130px;
+
+    p {
+      color: #fff;
+      line-height: 45px;
+
+      span {
+        color: #fcff21;
+      }
+
+      strong {
+        font-size: 30px;
+        color: #fcff21;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .toast-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*margin-bottom: 0.9375rem;*/
+  }
+
+  .toast-btn div {
+    width: 154px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: -1px 0 #ab7d1c,
+    0 1px #ab7d1c,
+    2px 0 #ab7d1c,
+      0 -1px #ab7d1c;
+    cursor: pointer;
+    background-color: #0a76a4;
+    background-size: 100% 100%;
+  }
+
+</style>
+<style lang="less">
+  .container {
+    .promptBox {
+      .el-dialog {
+        width: 415px !important;
+        // 错误提示背景，不满足抽奖条件时
+        /*background: url("../../assets/avatar.png") no-repeat center !important;*/
+        background-size: 100% 100% !important;
+        box-shadow: none;
+
+        .el-dialog__headerbtn {
+          display: none;
+        }
+
+        .el-dialog__header {
+          padding: 12px 20px 10px;
+        }
+
+        .el-dialog__title {
+          font-size: 22px;
+          color: #2d78c4;
+          font-weight: bold;
+          display: inline-block;
+          padding-top: 3px;
+        }
+
+        .el-button {
+          width: 123px;
+          height: 46px;
+          line-height: 46px;
+          text-align: center;
+          font-size: 22px;
+          font-weight: bold;
+          color: #fff;
+          padding: 0px;
+          border: 0;
+        }
+
+        .cancelBtn {
+          /*background: url("../../assets/avatar.png") no-repeat center; !**弹窗确定按钮背景 *!*/
+          text-shadow: -1px 0 #ab7d1c, 0 1px #ab7d1c, 1px 0 #ab7d1c,0 - 1 px #ab7d1c;
+        }
+
+        .submitBtn {
+          /*background: url("../../assets/avatar.png") no-repeat center; !**确定 *!*/
+          text-shadow: -1px 0 #2073bb, 0 1px #2073bb, 1px 0 #2073bb, 0 - 1 px #2073bb;
+        }
+
+        .el-dialog__body {
+          p {
+            width: 100%;
+            height: 130px;
+            line-height: 130px;
+            text-align: center;
+            font-size: 20px;
+            color: #fff;
+            /*background: url("../../assets/avatar.png") no-repeat center;*/
+            background-size: 100% 100%;
+
+          }
+        }
+      }
+    }
+  }
+
+  .messageBox.el-message {
+    min-width: 400px !important;
+  }
+
+  // 弹窗呼吸效果
+
+  @-webkit-keyframes twinkling {
+
+    0% {
+      opacity: 0.5
+    }
+
+    100% {
+      opacity: 1
+    }
+
+  }
+
+  @keyframes twinkling {
+
+    0% {
+      opacity: 0.5
+    }
+
+    100% {
+      opacity: 1
+    }
+
+  }
+
 </style>

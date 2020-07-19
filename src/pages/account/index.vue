@@ -166,8 +166,8 @@
 
 <script>
   import { isLogin, autoLogin } from '../../utils/index'
-  import API from '../../utils/api'
-  import { staticPageId } from '../../utils/const'
+  // import API from '../../utils/api'
+  // import { staticPageId } from '../../utils/const'
 
   export default {
     data () {
@@ -290,42 +290,42 @@
         }
       },
       getStaticPage () {
-        API.adsPos.staticPage({
-          // id: staticPageId.autoRenew
-          id: staticPageId.help
-        }).then(da => {
-          // console.log(da.data.records)
-          this.staticPage = da.data.records && da.data.records[0]
-        })
+        // API.adsPos.staticPage({
+        //   // id: staticPageId.autoRenew
+        //   id: staticPageId.help
+        // }).then(da => {
+        //   // console.log(da.data.records)
+        //   this.staticPage = da.data.records && da.data.records[0]
+        // })
       },
       getUserInfo () {
-        API.account.userInfo().then(() => {
-          this.userInfo = mpvue.getStorageSync('userInfo') || {}
-          this.userInfo.points = parseInt(this.userInfo.points, 10)
-          console.log('hell', this.userInfo)
-        })
+        // API.account.userInfo().then(() => {
+        //   this.userInfo = mpvue.getStorageSync('userInfo') || {}
+        //   this.userInfo.points = parseInt(this.userInfo.points, 10)
+        //   console.log('hell', this.userInfo)
+        // })
       },
       getAdsListBanner () {
-        API.adsPos.list({
-          positionIds: 10011 // 会员服务平台-个人中心广告
-        }).then(da => {
-          this.banner = da.data[0] && da.data[0].adList
-        })
+        // API.adsPos.list({
+        //   positionIds: 10011 // 会员服务平台-个人中心广告
+        // }).then(da => {
+        //   this.banner = da.data[0] && da.data[0].adList
+        // })
       },
       adClickHandle (item) {
-        API.adsPos.visit({id: item.id})
+        // API.adsPos.visit({id: item.id})
       },
       getMemberCardList () {
         this.allRights = []
-        API.member.list().then(da => {
-          this.memberCardList = da.data
-          this.memberCardItem = da.data[0]
-          if (this.memberCardItem.rights && this.memberCardItem.rights.length) {
-            this.memberCardItem.rights.forEach(rightsTypeItem => {
-              this.allRights = this.allRights.concat(rightsTypeItem.subList)
-            })
-          }
-        })
+        // API.member.list().then(da => {
+        //   this.memberCardList = da.data
+        //   this.memberCardItem = da.data[0]
+        //   if (this.memberCardItem.rights && this.memberCardItem.rights.length) {
+        //     this.memberCardItem.rights.forEach(rightsTypeItem => {
+        //       this.allRights = this.allRights.concat(rightsTypeItem.subList)
+        //     })
+        //   }
+        // })
       }
     },
     // 小程序

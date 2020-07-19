@@ -56,7 +56,7 @@
 
 <script>
   import { isLogin, autoLogin } from '../../utils/index'
-  import API from '../../utils/api'
+  // import API from '../../utils/api'
   import loadMore from '../../components/loadMore'
 
   export default {
@@ -96,26 +96,26 @@
         return (va / 1000).toFixed(1)
       },
       getListData () { /**/
-        API.store.list({
-          lon: this.location.longitude,
-          lat: this.location.latitude,
-          city: this.activityCityName === '全国' ? null : this.activityCityName,
-          current: this.current,
-          size: 6,
-          ascs: 'distance'
-        }).then(da => {
-          this.loading = false
-          da.data.records.forEach(item => {
-            item.distanceKm = this.distance(item.distance)
-            this.dataList.push(item)
-          })
-          this.totalPages = da.data.pages
-          if (this.current >= da.data.pages) {
-            this.lastPage = true
-          } else {
-            this.lastPage = false
-          }
-        })
+        // API.store.list({
+        //   lon: this.location.longitude,
+        //   lat: this.location.latitude,
+        //   city: this.activityCityName === '全国' ? null : this.activityCityName,
+        //   current: this.current,
+        //   size: 6,
+        //   ascs: 'distance'
+        // }).then(da => {
+        //   this.loading = false
+        //   da.data.records.forEach(item => {
+        //     item.distanceKm = this.distance(item.distance)
+        //     this.dataList.push(item)
+        //   })
+        //   this.totalPages = da.data.pages
+        //   if (this.current >= da.data.pages) {
+        //     this.lastPage = true
+        //   } else {
+        //     this.lastPage = false
+        //   }
+        // })
       },
       activityCityIdItem (name) {
         this.activityCityName = name
@@ -124,9 +124,9 @@
         this.getListData()
       },
       getStoreCityList () {
-        API.store.storeCityList().then(da => {
-          this.activityCity = da.data
-        })
+        // API.store.storeCityList().then(da => {
+        //   this.activityCity = da.data
+        // })
       },
       navigation (tiem) {
         wx.openLocation({ // 使用微信内置地图查看位置
