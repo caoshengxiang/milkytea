@@ -97,14 +97,6 @@
           },
           {
             // icon: require('./assets/avatar.png'),
-            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/7.png',
-            count: 10000,
-            name: '300元京东券',
-            isPrize: 1,
-            id: 201902
-          },
-          {
-            // icon: require('./assets/avatar.png'),
             icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/3.png',
             count: 5000,
             name: '50个比特币',
@@ -120,15 +112,6 @@
             isPrize: 1, // 该奖项是否为奖品
             id: 201904
           },
-
-          {
-            // icon: require('./assets/avatar.png'),
-            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/5.png',
-            count: 50000,
-            name: '100元话费券',
-            isPrize: 1,
-            id: 201905
-          },
           {
             // icon: require('./assets/avatar.png'),
             icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/6.png',
@@ -136,6 +119,14 @@
             name: '100个比特币',
             isPrize: 1,
             id: 201906
+          },
+          {
+            // icon: require('./assets/avatar.png'),
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/7.png',
+            count: 10000,
+            name: '300元京东券',
+            isPrize: 1,
+            id: 201902
           },
           {
             icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/6.png',
@@ -151,7 +142,14 @@
             isPrize: 1, // 该奖项是否为奖品
             id: 201908
           },
-
+          {
+            // icon: require('./assets/avatar.png'),
+            icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/5.png',
+            count: 50000,
+            name: '100元话费券',
+            isPrize: 1,
+            id: 201905
+          },
           {
             icon: 'http://demo.sc.chinaz.net/Files/DownLoad/webjs1/201803/jiaoben5789/images/6.png',
             count: 5000,
@@ -456,7 +454,7 @@
   }
 
   .prize-type {
-    font-size: 24rpx;
+    font-size: 23rpx;
     font-weight: bold;
   }
 
