@@ -14,7 +14,7 @@
           >
             <!--开始-->
             <!-- 指针程呼吸状态，两张指针进行透明度切换，使用css3改变透明度当条件成立时-->
-            <img style="width: 150px;margin-left: 50px;"
+            <img style="width: 150rpx;margin-left: 50rpx;height: 200rpx;"
                  src="https://8171176.h40.faiusr.com/4/153/ACgIABAEGAAg7JuN9gUovPm_pgMwlgE43AE.png" alt="">
 
           </div>
@@ -34,7 +34,7 @@
             </div>
             <div class="zplightBox">
               <!-- 透明彩灯，使用css3改变透明度使其闪动 -->
-              <!--              <img src="../../assets/avatar.png" alt="">-->
+<!--                            <img src="https://www.17sucai.com/preview/1424582/2020-01-01/dzp/images/turnplate-bg.png" alt="">-->
             </div>
 
           </div>
@@ -325,24 +325,24 @@
 </script>
 <style scoped lang="less">
   .container {
-    width: 652px;
-    padding-top: 58px;
+    width: 652rpx;
+    padding-top: 58rpx;
     /*background: url("https://www.17sucai.com/preview/1424582/2020-01-01/dzp/images/turnplate-bg.png") no-repeat top center; !*转盘背景，不包含转盘 *!*/
-    padding-bottom: 30px;
-    margin: 0px auto;
+    padding-bottom: 30rpx;
+    margin: 0rpx auto;
   }
 
   .lucky-wheel {
-    width: 625px;
-    height: 625px;
-    padding-top: 25px;
+    width: 625rpx;
+    height: 625rpx;
+    padding-top: 25rpx;
     position: relative;
   }
 
   .lucky-title {
     position: absolute;
-    top: 0px;
-    left: 36px;
+    top: 0rpx;
+    left: 36rpx;
     z-index: 999;
   }
 
@@ -354,8 +354,8 @@
   }
 
   .wheel-bg {
-    width: 625px;
-    height: 625px;
+    width: 625rpx;
+    height: 625rpx;
     background: url("https://www.17sucai.com/preview/1424582/2020-01-01/dzp/images/turnplate-bg.png") no-repeat center top; /**转盘 */
     background-size: 100%;
     color: #fff;
@@ -368,12 +368,12 @@
   }
 
   .zplightBox {
-    width: 659px;
-    height: 657px;
+    width: 659rpx;
+    height: 657rpx;
 
     position: absolute;
-    top: -15px;
-    left: -16px;
+    top: -15rpx;
+    left: -16rpx;
 
     img {
       width: 100%;
@@ -394,13 +394,13 @@
     left: 50%;
     z-index: 100;
     transform: translate(-50%, -60%);
-    /*width: 625px;*/
-    /*height: 625px;*/
+    /*width: 625rpx;*/
+    /*height: 625rpx;*/
   }
 
   .wheel-pointer {
-    width: 238px;
-    height: 263px;
+    width: 238rpx;
+    height: 263rpx;
     transform-origin: center 60%;
 
     img {
@@ -417,7 +417,7 @@
   }
 
   .wheelBefor {
-    /*background: url("./assets/avatar.png") no-repeat center top; !**指针 *!*/
+    /*background: url("https://www.17sucai.com/preview/1424582/2020-01-01/dzp/images/turnplate-bg.png") no-repeat center top; !**指针 *!*/
     background-size: 100%;
 
   }
@@ -440,52 +440,53 @@
   }
 
   .prize-item {
-    width: 137px;
-    height: 197px;
+    width: 137rpx;
+    height: 197rpx;
   }
 
   .prize-pic img {
-    width: 69px;
+    width: 69rpx;
+    height: 60rpx;
   }
 
   .prize-count {
-    font-size: 26px;
+    font-size: 26rpx;
     font-weight: bold;
     color: #ea3697;
   }
 
   .prize-type {
-    font-size: 24px;
+    font-size: 24rpx;
     font-weight: bold;
   }
 
   .prize-list .lightBox {
 
-    width: 57px;
-    height: 58px;
+    width: 57rpx;
+    height: 58rpx;
     position: absolute;
 
   }
 
   // 转盘内容倾斜度
   .prize-list .prize-item:first-child {
-    top: 44px;
-    left: 245px;
+    top: 44rpx;
+    left: 245rpx;
     transform: rotate(0deg);
 
     .prize-type {
       color: #c23800;
-      text-shadow: -1px 0 #fff,
-      0 1px #fff,
-      2px 0 #fff,
-        0 -1px #fff;
+      text-shadow: -1rpx 0 #fff,
+      0 1rpx #fff,
+      2rpx 0 #fff,
+        0 -1rpx #fff;
     }
 
   }
 
   .prize-list .prize-item:nth-child(2) {
-    top: 74px;
-    left: 345px;
+    top: 74rpx;
+    left: 345rpx;
     transform: rotate(37deg);
 
     .prize-type {
@@ -494,8 +495,8 @@
   }
 
   .prize-list .prize-item:nth-child(3) {
-    top: 162px;
-    left: 409px;
+    top: 162rpx;
+    left: 409rpx;
     transform: rotate(70deg);
 
     .prize-type {
@@ -504,22 +505,22 @@
   }
 
   .prize-list .prize-item:nth-child(4) {
-    top: 264px;
-    left: 411px;
+    top: 264rpx;
+    left: 411rpx;
     transform: rotate(111deg);
 
     .prize-type {
       color: #c22e00;
-      text-shadow: -1px 0 #fff,
-      0 1px #fff,
-      2px 0 #fff,
-        0 -1px #fff;
+      text-shadow: -1rpx 0 #fff,
+      0 1rpx #fff,
+      2rpx 0 #fff,
+        0 -1rpx #fff;
     }
   }
 
   .prize-list .prize-item:nth-child(5) {
-    top: 354px;
-    left: 343px;
+    top: 354rpx;
+    left: 343rpx;
     transform: rotate(-220deg);
 
     .prize-type {
@@ -528,8 +529,8 @@
   }
 
   .prize-list .prize-item:nth-child(6) {
-    top: 386px;
-    left: 247px;
+    top: 386rpx;
+    left: 247rpx;
     transform: rotate(-181deg);
 
     .prize-type {
@@ -539,8 +540,8 @@
   }
 
   .prize-list .prize-item:nth-child(7) {
-    top: 353px;
-    left: 147px;
+    top: 353rpx;
+    left: 147rpx;
     transform: rotate(-146deg);
 
     .prize-type {
@@ -549,22 +550,22 @@
   }
 
   .prize-list .prize-item:nth-child(8) {
-    top: 268px;
-    left: 82px;
+    top: 268rpx;
+    left: 82rpx;
     transform: rotate(-108deg);
 
     .prize-type {
       color: #c22e00;
-      text-shadow: -1px 0 #fff,
-      0 1px #fff,
-      2px 0 #fff,
-        0 -1px #fff;
+      text-shadow: -1rpx 0 #fff,
+      0 1rpx #fff,
+      2rpx 0 #fff,
+        0 -1rpx #fff;
     }
   }
 
   .prize-list .prize-item:nth-child(9) {
-    top: 158px;
-    left: 82px;
+    top: 158rpx;
+    left: 82rpx;
     transform: rotate(-75deg);
 
     .prize-type {
@@ -573,8 +574,8 @@
   }
 
   .prize-list .prize-item:nth-child(10) {
-    top: 75px;
-    left: 145px;
+    top: 75rpx;
+    left: 145rpx;
     transform: rotate(-39deg);
 
     .prize-type {
@@ -585,8 +586,8 @@
   .tip {
     position: relative;
     margin: 2.5rem auto 0;
-    width: 300px;
-    border: 1px solid #fbc27f;
+    width: 300rpx;
+    border: 1rpx solid #fbc27f;
   }
 
   .tip-title {
@@ -623,21 +624,21 @@
     left: 50%;
     z-index: 20000;
     transform: translate(-50%, -50%);
-    width: 552px;
-    height: 490px;
+    width: 552rpx;
+    height: 490rpx;
 
     .toastTop {
 
       position: absolute;
-      top: -122px;
-      left: 86px;
+      top: -122rpx;
+      left: 86rpx;
       /*-webkit-animation: twinkling 1s infinite ease-in-out;*/
       -webkit-transform: rotate(360deg);
       animation: rotation 4s linear infinite;
       -moz-animation: rotation 4s linear infinite;
       -webkit-animation: rotation 4s linear infinite;
       -o-animation: rotation 4s linear infinite;
-      width: 386px;
+      width: 386rpx;
 
       img {
         width: 100%;
@@ -651,27 +652,27 @@
     /*background: url("./assets/toast.png") no-repeat top center; !**中奖弹窗背景 *!*/
     background: #b0b7bd; /**中奖弹窗背景 */
     background-size: 100% 100%;
-    width: 552px;
-    height: 430px;
+    width: 552rpx;
+    height: 430rpx;
     position: absolute;
-    top: 0px;
-    left: 0px;
-    margin: 0px auto;
+    top: 0rpx;
+    left: 0rpx;
+    margin: 0rpx auto;
 
     .containerBox {
-      width: 194px;
+      width: 194rpx;
       position: absolute;
-      bottom: 106px;
-      left: 191px;
+      bottom: 106rpx;
+      left: 191rpx;
 
     }
   }
 
   .toast-picture {
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 600px;
+    top: 0rpx;
+    left: 0rpx;
+    width: 600rpx;
 
   }
 
@@ -684,23 +685,23 @@
   }
 
   .toast-title {
-    padding: 60px 0;
-    padding-bottom: 30px;
-    font-size: 18px;
+    padding: 60rpx 0;
+    padding-bottom: 30rpx;
+    font-size: 18rpx;
     color: #fc7939;
     text-align: center;
-    margin-top: 130px;
+    margin-top: 130rpx;
 
     p {
       color: #fff;
-      line-height: 45px;
+      line-height: 45rpx;
 
       span {
         color: #fcff21;
       }
 
       strong {
-        font-size: 30px;
+        font-size: 30rpx;
         color: #fcff21;
         font-weight: normal;
       }
@@ -715,17 +716,17 @@
   }
 
   .toast-btn div {
-    width: 154px;
-    height: 60px;
+    width: 154rpx;
+    height: 60rpx;
     text-align: center;
-    line-height: 60px;
-    font-size: 26px;
+    line-height: 60rpx;
+    font-size: 26rpx;
     font-weight: bold;
     color: #fff;
-    text-shadow: -1px 0 #ab7d1c,
-    0 1px #ab7d1c,
-    2px 0 #ab7d1c,
-      0 -1px #ab7d1c;
+    text-shadow: -1rpx 0 #ab7d1c,
+    0 1rpx #ab7d1c,
+    2rpx 0 #ab7d1c,
+      0 -1rpx #ab7d1c;
     cursor: pointer;
     background-color: #0a76a4;
     background-size: 100% 100%;
@@ -736,7 +737,7 @@
   .container {
     .promptBox {
       .el-dialog {
-        width: 415px !important;
+        width: 415rpx !important;
         // 错误提示背景，不满足抽奖条件时
         /*background: url("../../assets/avatar.png") no-repeat center !important;*/
         background-size: 100% 100% !important;
@@ -747,46 +748,46 @@
         }
 
         .el-dialog__header {
-          padding: 12px 20px 10px;
+          padding: 12rpx 20rpx 10rpx;
         }
 
         .el-dialog__title {
-          font-size: 22px;
+          font-size: 22rpx;
           color: #2d78c4;
           font-weight: bold;
           display: inline-block;
-          padding-top: 3px;
+          padding-top: 3rpx;
         }
 
         .el-button {
-          width: 123px;
-          height: 46px;
-          line-height: 46px;
+          width: 123rpx;
+          height: 46rpx;
+          line-height: 46rpx;
           text-align: center;
-          font-size: 22px;
+          font-size: 22rpx;
           font-weight: bold;
           color: #fff;
-          padding: 0px;
+          padding: 0rpx;
           border: 0;
         }
 
         .cancelBtn {
           /*background: url("../../assets/avatar.png") no-repeat center; !**弹窗确定按钮背景 *!*/
-          text-shadow: -1px 0 #ab7d1c, 0 1px #ab7d1c, 1px 0 #ab7d1c,0 - 1 px #ab7d1c;
+          text-shadow: -1rpx 0 #ab7d1c, 0 1rpx #ab7d1c, 1rpx 0 #ab7d1c,0 - 1 rpx #ab7d1c;
         }
 
         .submitBtn {
           /*background: url("../../assets/avatar.png") no-repeat center; !**确定 *!*/
-          text-shadow: -1px 0 #2073bb, 0 1px #2073bb, 1px 0 #2073bb, 0 - 1 px #2073bb;
+          text-shadow: -1rpx 0 #2073bb, 0 1rpx #2073bb, 1rpx 0 #2073bb, 0 - 1 rpx #2073bb;
         }
 
         .el-dialog__body {
           p {
             width: 100%;
-            height: 130px;
-            line-height: 130px;
+            height: 130rpx;
+            line-height: 130rpx;
             text-align: center;
-            font-size: 20px;
+            font-size: 20rpx;
             color: #fff;
             /*background: url("../../assets/avatar.png") no-repeat center;*/
             background-size: 100% 100%;
@@ -798,7 +799,7 @@
   }
 
   .messageBox.el-message {
-    min-width: 400px !important;
+    min-width: 400rpx !important;
   }
 
   // 弹窗呼吸效果
