@@ -1,67 +1,15 @@
 <template>
   <div class="store-page">
-    <div class="search-box" @click="visible3 = true"><span class="pos-name">{{activityCityName}}</span><img
-      class="sanjiao" src="../../../static/icon/sanjiao.png"
-      alt=""></div>
-    <a hover-class="none" :href="'/pages/package/storeDetail/main?id='+item.id" v-for="(item, index) in dataList"
-       :key="index">
-      <div class="store-item">
-        <img mode="widthFix" class="store-img"
-             :src="item.cover"
-             alt="">
-        <div class="store-con page-padding">
-          <div class="font1">{{item.name}}</div>
-          <!--<div class="font2">{{item.name}}</div>-->
-          <div class="font3">营业时间 {{item.businessTimeWeekday}}</div>
-          <div class="font4">{{item.address}}</div>
-          <div class="font5">
-            <span>{{item.distanceKm}}km</span>
-            <span class="pos" @click.stop="navigation(item)">
-              <img mode="widthFix"  class="font5-img" src="../../../static/icon/pos.png" alt="">
-              门店导航
-            </span>
-          </div>
-        </div>
-      </div>
-    </a>
-
-    <div class="com-modal" v-if="visible3" catchtouchmove="preventTouchMove" @click="visible3=false">
-      <div class="com-modal-con" @click.stop>
-        <div class="search-box">
-          <span class="pos-name">{{activityCityName}}</span>
-          <img class="sanjiao" src="../../../static/icon/sanjiao.png" alt="">
-        </div>
-        <div class="city-list">
-          <div class="city-name" @click="activityCityIdItem('全国')"
-               :class="{'city-name-active': activityCityName == '全国'}">
-            全国
-          </div>
-          <div class="city-name" @click="activityCityIdItem(item.city)"
-               :class="{'city-name-active': activityCityName == item.city}"
-               v-for="(item, index) in activityCity" :key="index">{{item.city}}
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--加载更多-->
-    <!--<div class="weui-loadmore">-->
-      <!--<div class="weui-loading" v-if="!lastPage"></div>-->
-      <!--<div class="weui-loadmore__tips" v-if="!lastPage">正在加载</div>-->
-      <!--<div class="weui-loadmore__tips" v-if="lastPage">- 已经到底啦 -</div>-->
-    <!--</div>-->
-    <load-more :loading="loading" :lastPage="lastPage"></load-more>
-    <!--加载更多-->
+    k 歌
   </div>
 </template>
 
 <script>
   import { isLogin, autoLogin } from '../../utils/index'
   import API from '../../utils/api'
-  import loadMore from '../../components/loadMore'
 
   export default {
     components: {
-      loadMore,
     },
 
     data () {

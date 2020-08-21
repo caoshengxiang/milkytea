@@ -1,24 +1,31 @@
 <template>
   <div class="com-pages home-page">
     <button @click="start">开始录音</button>
-    <button @click="pause">暂停录音</button>
-    <button @click="resume">继续录音</button>
+    <button @click="pause" style="width: 49%;display: inline-block;">暂停录音</button>
+    <button @click="resume" style="width: 49%;display: inline-block;">继续录音</button>
     <button @click="stop">停止录音</button>
     <button @click="playV">播放录音</button>
+    <div>录音播放时长{{audio3CurrentTime}}</div>
+<!--    <button @click="downloadFile">下载录音</button>-->
 
     <button @click="changeAudioType">切换背景音</button>
     <div class="section tc">
       <!--             show-mute-btn-->
-      <video id="myVideo"
-             :muted="true"
-             @timeupdate="bindtimeupdate"
-             style="width: 100%;"
-             :src="videoSrcs[videoIndex]"></video>
-      <div class="btn-area">
-        <input @blur="bindInputBlur"/>
-        <button @click="bindSendDanmu">发送弹幕</button>
-        <button @click="changVideo">切换视频源</button>
+      <div class="video-box">
+        <video id="myVideo"
+               class="video"
+               :muted="true"
+               :controls="false"
+               @timeupdate="bindtimeupdate"
+               :src="videoSrcs[videoIndex]"></video>
+        <div class="mask"></div>
       </div>
+
+<!--      <div class="btn-area">-->
+<!--        <input @blur="bindInputBlur"/>-->
+<!--        <button @click="bindSendDanmu">发送弹幕</button>-->
+<!--        <button @click="changVideo">切换视频源</button>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
@@ -36,24 +43,33 @@
         inputValue: '',
         videoContext: null,
         videoCurrentTime: '', // 视频当前播放时间
+        videoTotalTime: '', // 视频总时间
+        audio1CurrentTime: '',
+        audio2CurrentTime: '',
+        audio3CurrentTime: '',
         videoSrcs: [
-          // 'http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8',
-          // 'http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8',
-          'https://listen.10155.com/listener/90115000/fulltrack_dl/m3u8/20200803/907070000501026862-1/player.m3u8?user=N/A&channelid=3000007147&contentid=93053000202001170414830&tokenid=2F48ED34BF6754C3CD1EAD8F56C5ABBD&timestamp=1588816704',
-          'https://listen.10155.com/listener/90115000/fulltrack_dl/m3u8/20200803/907070000501026862-2/player.m3u8?user=N/A&channelid=3000007147&contentid=93053000202001170414830&tokenid=2F48ED34BF6754C3CD1EAD8F56C5ABBD&timestamp=1588816704',
-         ],
+          'https://listen.10155.com/listener/90115000/fulltrack_dl/m3u8/20200803/89381000000431-1/player.m3u8?user=N%2FA&channelid=3000007616&contentid=893810000504561850&tokenid=F96D9F0A3A3116A1BAF61C18A27589EC&timestamp=1597893622',
+          // 'https://listen.10155.com/listener/90115000/fulltrack_dl/m3u8/20200803/98716000000934-1/player.m3u8?user=N%2FA&channelid=3000007616&contentid=987160000506526215&tokenid=B5AF5EED9D4F167D2076335B1B85AC5D&timestamp=1597893688',
+        ],
         audioSrcs: [
-          'http://119.27.160.97/a.1.mp3',
-          'http://119.27.160.97/a.2.mp3'
+          // 'http://119.27.160.97/a.1.mp3',
+          // 'http://119.27.160.97/a.2.mp3',
+          'http://119.27.160.97:80/1.1.mp3',
+          'http://119.27.160.97:80/1.2.mp3',
+          // 'http://119.27.160.97:80/2.1.mp3',
+          // 'http://119.27.160.97:80/2.2.mp3',
         ],
         videoIndex: 0,
         /**/
+        timer: null,
       }
     },
     components: {},
 
     methods: {
       start () {
+        // this.stop()
+
         this.innerAudioContext.play()
         this.innerAudioContext2.play()
 
@@ -68,6 +84,10 @@
           frameSize: 50
         }
         this.recorderManager.start(options)
+
+        setTimeout(() => {
+          this.checkTime()
+        }, 1000)
       },
       changeAudio () {
         console.log('切换0-1', this.volumeType)
@@ -94,18 +114,34 @@
         this.innerAudioContext.pause()
         this.innerAudioContext2.pause()
         this.videoContext.pause()
+
+        if (this.timer) {
+          clearInterval(this.timer)
+        }
       },
       resume () { // 继续播放
         wx.getRecorderManager().resume()
         this.innerAudioContext.play()
         this.innerAudioContext2.play()
         this.videoContext.play()
+
+        setTimeout(() => {
+          this.checkTime()
+        }, 1000)
       },
       stop () {
+        console.log('停止录音')
         wx.getRecorderManager().stop()
         this.innerAudioContext.stop()
         this.innerAudioContext2.stop()
         this.videoContext.stop()
+        this.videoContext.seek(0)
+        this.innerAudioContext.seek(0)
+        this.innerAudioContext2.seek(0)
+
+        if (this.timer) {
+          clearInterval(this.timer)
+        }
       },
       playV () {
         this.innerAudioContext3.src = this.tempFilePath
@@ -131,21 +167,80 @@
           color: getRandomColor()
         })
       },
-      changVideo () {
-        this.videoContext.stop()
-        if (this.videoIndex === 0) {
-          this.videoIndex = 1
-        } else {
-          this.videoIndex = 0
-        }
-        this.videoContext.play()
-        this.videoContext.seek(this.videoCurrentTime)
-      },
+      // changVideo () {
+      //   console.log('changeVideoSrc')
+      //   this.stop()
+      //   if (this.videoIndex === 0) {
+      //     this.videoIndex = 1
+      //     this.innerAudioContext.src = this.audioSrcs[0]
+      //     this.innerAudioContext2.src = this.audioSrcs[1]
+      //   } else {
+      //     this.videoIndex = 0
+      //     this.innerAudioContext.src = this.audioSrcs[3]
+      //     this.innerAudioContext2.src = this.audioSrcs[4]
+      //   }
+      //   // this.videoContext.play()
+      //   // this.videoContext.seek(this.videoCurrentTime)
+      // },
       bindtimeupdate (e) {
         // console.log(e)
         this.videoCurrentTime = e.mp.detail.currentTime
+        this.videoTotalTime = e.mp.detail.duration
         console.log('视频播放时长', this.videoCurrentTime)
-      }
+        console.log('视频总时长', this.videoTotalTime)
+      },
+      downloadFile () {
+        console.log('点击下载')
+        if (!this.tempFilePath) {
+          console.log('下载没有临时地址tempFilePath')
+          return
+        }
+        wx.downloadFile({
+          url: this.tempFilePath,
+          success (res) {
+            console.log('下载结果', res)
+          }
+        })
+      },
+      checkTime () {
+        const allowTime = 2.5 // s
+        if (this.timer) {
+          clearInterval(this.timer)
+        }
+        this.timer = setInterval(() => {
+          if (!this.audio2CurrentTime || !this.audio1CurrentTime) {
+            console.log('跳过--时差校验')
+            return
+          }
+          console.log('时差校验')
+          if (Math.abs(this.innerAudioContext.currentTime - this.videoCurrentTime) > allowTime) {
+            console.log('矫正时差-------------音频1------------矫正时差', this.innerAudioContext.currentTime, this.innerAudioContext2.currentTime, this.videoCurrentTime)
+            this.innerAudioContext.seek(this.videoCurrentTime)
+            this.innerAudioContext2.seek(this.videoCurrentTime)
+            this.pause()
+            wx.showLoading({
+              title: '当前网络环境差，请切换到良好网络',
+            })
+            setTimeout(() => {
+              this.resume()
+              wx.hideLoading()
+            }, 3000)
+          } else if (Math.abs(this.innerAudioContext2.currentTime - this.videoCurrentTime) > allowTime) {
+            console.log('矫正时差-------------音频2------------矫正时差', this.innerAudioContext.currentTime, this.innerAudioContext2.currentTime, this.videoCurrentTime)
+            this.innerAudioContext.seek(this.videoCurrentTime)
+            this.innerAudioContext2.seek(this.videoCurrentTime)
+            this.pause()
+            wx.showLoading({
+              mask: true,
+              title: '当前网络环境差，请切换到良好网络',
+            })
+            setTimeout(() => {
+              this.resume()
+              wx.hideLoading()
+            }, 3000)
+          }
+        }, 250)
+      },
     },
     mounted () {
     },
@@ -169,7 +264,8 @@
         this.stop()
       })
       this.innerAudioContext.onTimeUpdate(() => {
-        console.log('音频1 播放时长', this.innerAudioContext.currentTime)
+        this.audio1CurrentTime = this.innerAudioContext.currentTime
+        console.log('音频1 播放时长', this.audio1CurrentTime)
       })
       this.innerAudioContext.onError((res) => {
         console.log(res.errMsg)
@@ -187,7 +283,9 @@
         this.changeAudio()
       })
       this.innerAudioContext2.onTimeUpdate(() => {
-        console.log('音频2 播放时长', this.innerAudioContext2.currentTime)
+        // console.log('音频2 播放时长', this.innerAudioContext2.currentTime)
+        this.audio2CurrentTime = this.innerAudioContext2.currentTime
+        console.log('音频2 播放时长', this.audio2CurrentTime)
       })
       this.innerAudioContext2.onEnded(() => {
         console.log('音频2结束')
@@ -202,9 +300,17 @@
       this.innerAudioContext3.onPlay(() => {
         console.log('开始播放录音')
       })
-      this.innerAudioContext.onError((res) => {
+      this.innerAudioContext3.onError((res) => {
         console.log(res.errMsg)
         console.log(res.errCode)
+      })
+      this.innerAudioContext3.onTimeUpdate(() => {
+        this.audio3CurrentTime = this.innerAudioContext3.currentTime
+        console.log('播放录音 播放时长', this.innerAudioContext3.currentTime)
+      })
+      this.innerAudioContext3.onEnded(() => {
+        console.log('录音播放结束结束')
+        this.stop()
       })
       /**/
 
@@ -254,5 +360,27 @@
 
   .test {
     color: #383633;
+  }
+
+  video::-webkit-media-controls {
+    display:none !important;
+  }
+  .video-box {
+    position: relative;
+    width: 100%;
+    height: 500rpx;
+    .video {
+      width: 100%;
+      height: 500rpx;
+    }
+    .mask {
+      width: 100%;
+      height: 500rpx;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: rgba(255, 69, 40, 0);
+      z-index: 99;
+    }
   }
 </style>

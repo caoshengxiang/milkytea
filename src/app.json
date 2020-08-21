@@ -2,8 +2,7 @@
   "pages": [
     "pages/index/main",
     "pages/store/main",
-    "pages/account/main",
-    "pages/logs/main"
+    "pages/account/main"
   ],
   "subPackages": [
     {
@@ -45,7 +44,7 @@
         "selectedIconPath": "static/tabs/home-active.png"
       },
       {
-        "text": "店铺",
+        "text": "K歌",
         "pagePath": "pages/store/main",
         "iconPath": "static/tabs/store.png",
         "selectedIconPath": "static/tabs/store-active.png"
